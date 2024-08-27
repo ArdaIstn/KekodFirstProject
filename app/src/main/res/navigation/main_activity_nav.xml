@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity_nav"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.kekodfirstproject.ui.fragment.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/happinessFragment"
+        android:name="com.example.kekodfirstproject.ui.fragment.HappinessFragment"
+        android:label="fragment_happiness"
+        tools:layout="@layout/fragment_happiness" />
+    <fragment
+        android:id="@+id/optimismFragment"
+        android:name="com.example.kekodfirstproject.ui.fragment.OptimismFragment"
+        android:label="fragment_optimism"
+        tools:layout="@layout/fragment_optimism" />
+    <fragment
+        android:id="@+id/kindnessFragment"
+        android:name="com.example.kekodfirstproject.ui.fragment.KindnessFragment"
+        android:label="fragment_kindness"
+        tools:layout="@layout/fragment_kindness" />
+    <fragment
+        android:id="@+id/givingFragment"
+        android:name="com.example.kekodfirstproject.ui.fragment.GivingFragment"
+        android:label="fragment_giving"
+        tools:layout="@layout/fragment_giving" />
+    <fragment
+        android:id="@+id/respectFragment"
+        android:name="com.example.kekodfirstproject.ui.fragment.RespectFragment"
+        android:label="fragment_respect"
+        tools:layout="@layout/fragment_respect" />
+</navigation>
