@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.kekodfirstproject.ui.fragment.MainFragment"
-        android:label="fragment_main"
+        android:label="com.example.kekodfirstproject.ui.fragment.MainFragment"
         tools:layout="@layout/fragment_main" />
     <fragment
         android:id="@+id/happinessFragment"
