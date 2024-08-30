@@ -31,4 +31,6 @@ class MainActivity : AppCompatActivity() {
     private fun eventView() {
         bottomNav.setupWithNavController(navHostFragment.navController)
     }
+
+
 }
