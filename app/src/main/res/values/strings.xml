@@ -2,4 +2,10 @@
     <string name="app_name">KekodFirstProject</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="button_happiness">Happiness</string>
+    <string name="button_respect">Respect</string>
+    <string name="button_kindness">Kindness</string>
+    <string name="button_optimism">Optimism</string>
+    <string name="button_giving">Giving</string>
+    <string name="button_ego">Ego</string>
 </resources>
