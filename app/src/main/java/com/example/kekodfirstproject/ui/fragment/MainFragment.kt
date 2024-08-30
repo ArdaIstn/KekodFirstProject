@@ -24,7 +24,6 @@ class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
     private lateinit var bottomNav: BottomNavigationView
-    private lateinit var bottomNavMenu: Menu
     private val viewModel: MainViewModel by activityViewModels()
     private val maxItems = 5
 
@@ -44,8 +43,6 @@ class MainFragment : Fragment() {
 
     private fun setupUI() {
         bottomNav = (requireActivity() as MainActivity).findViewById(R.id.bottomNavigation)
-        bottomNavMenu = bottomNav.menu
-
         bottomNav.setOnItemSelectedListener { item ->
             navigateToFragment(item.itemId)
             true
@@ -54,15 +51,15 @@ class MainFragment : Fragment() {
 
     private fun observeSwitchStates() {
         viewModel.switchStates.observe(viewLifecycleOwner) { switchStates ->
-            switchStates.forEach { (id, isSwitchChecked) ->
+            switchStates.forEach { (id, isChecked) ->
                 getSwitchById(id)?.apply {
                     setOnCheckedChangeListener(null)
-                    this.isChecked = isSwitchChecked
-                    setOnCheckedChangeListener { _, isChecked ->
-                        handleSwitchChange(this, isChecked)
-                        viewModel.updateSwitchState(id, isChecked)
+                    this.isChecked = isChecked
+                    setOnCheckedChangeListener { _, checked ->
+                        handleSwitchChange(this, checked)
+                        viewModel.updateSwitchState(id, checked)
                     }
-                    handleEgoSwitchState(id, isSwitchChecked)
+                    handleEgoSwitchState(id, isChecked)
                 }
             }
         }
@@ -83,12 +80,10 @@ class MainFragment : Fragment() {
         val navFragmentId = getNavFragmentId(switch)
 
         if (isChecked) {
-            if (bottomNavMenu.size() < maxItems) {
+            if (bottomNav.menu.size() < maxItems) {
                 addMenuItem(switch.text.toString(), getIconForSwitch(switch), navFragmentId)
             } else {
-                Snackbar.make(
-                    binding.root, "Maksimum menü öğesi sınırına ulaşıldı.", Snackbar.LENGTH_SHORT
-                ).show()
+                Snackbar.make(binding.root, "Maksimum menü öğesi sınırına ulaşıldı.", Snackbar.LENGTH_SHORT).show()
                 switch.isChecked = false
             }
         } else {
@@ -97,24 +92,15 @@ class MainFragment : Fragment() {
     }
 
     private fun handleEgoSwitchState(id: Int, isChecked: Boolean) {
-        val swEgo = binding.swEgo
         if (id == R.id.swEgo) {
             setOtherSwitchesEnabled(!isChecked)
             bottomNav.visibility = if (isChecked) View.GONE else View.VISIBLE
-
-            if (swEgo.isChecked) {
-                binding.ivMain.setImageResource(R.drawable.ego_image)
-            } else {
-                binding.ivMain.setImageResource(R.drawable.well_done_image)
-            }
-
+            binding.ivMain.setImageResource(if (isChecked) R.drawable.ego_image else R.drawable.well_done_image)
         }
     }
 
     private fun navigateToFragment(fragmentId: Int) {
-        val navController =
-            (requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
-
+        val navController = (requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
         if (navController.currentDestination?.id != fragmentId) {
             navController.navigate(fragmentId)
         }
@@ -150,12 +136,7 @@ class MainFragment : Fragment() {
             R.id.swKindness -> R.id.kindnessFragment
             R.id.swGiving -> R.id.givingFragment
             R.id.swRespect -> R.id.respectFragment
-            else -> {
-                Snackbar.make(
-                    binding.root, "Bilinmeyen switch tespit edildi.", Snackbar.LENGTH_SHORT
-                ).show()
-                R.id.mainFragment // Varsayılan bir fragment ID'si
-            }
+            else -> R.id.mainFragment
         }
     }
 
@@ -171,13 +152,13 @@ class MainFragment : Fragment() {
     }
 
     private fun addMenuItem(title: String, iconResId: Int, navFragmentId: Int) {
-        if (bottomNavMenu.findItem(navFragmentId) == null) {
-            bottomNavMenu.add(Menu.NONE, navFragmentId, Menu.NONE, title).setIcon(iconResId)
+        if (bottomNav.menu.findItem(navFragmentId) == null) {
+            bottomNav.menu.add(Menu.NONE, navFragmentId, Menu.NONE, title).setIcon(iconResId)
         }
     }
 
     private fun removeMenuItem(navFragmentId: Int) {
-        bottomNavMenu.removeItem(navFragmentId)
+        bottomNav.menu.removeItem(navFragmentId)
     }
 
     private fun setOtherSwitchesEnabled(isEnabled: Boolean) {
