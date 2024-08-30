@@ -30,7 +30,6 @@ Bu proje, Kotlin dilinde geliştirilmiş olup,  kullanıcı arayüzü ve işlevs
 
 - Android Studio
 - Kotlin 1.5+
-- [Diğer gereksinimler]
 
 ### Adımlar
 
