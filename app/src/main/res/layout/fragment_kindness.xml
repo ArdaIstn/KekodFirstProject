@@ -8,7 +8,7 @@
     tools:context=".ui.fragment.KindnessFragment">
 
     <TextView
-        android:id="@+id/tvKindnessDetail2"
+        android:id="@+id/tvKindnessDetail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
