@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="status_bar_color">#A02334</color>
+    <color name="switch_thumb_tint">#f78c6b</color>
+    <color name="switch_track_tint">#ffd166</color>
+    <color name="ego_switch_thumb_tint">#06d6a0</color>
+    <color name="ego_switch_track_tint">#118ab2</color>
+    <color name="main_fragment_background">#f47068</color>
+    <color name="giving_fragment_background">#ffb3ae</color>
+    <color name="happiness_fragment_background">#73a942</color>
+    <color name="kindness_fragment_background">#1697a6</color>
+    <color name="optimism_fragment_background">#d9ae94</color>
+    <color name="respect_fragment_background">#ffc24b</color>
+
+
 </resources>
