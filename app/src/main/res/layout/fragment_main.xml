@@ -16,7 +16,9 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/swKindness"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/swKindness" />
+        app:layout_constraintTop_toTopOf="@+id/swKindness"
+        app:thumbTint="@color/switch_thumb_tint"
+        app:trackTint="@color/switch_track_tint" />
 
     <com.google.android.material.materialswitch.MaterialSwitch
         android:id="@+id/swRespect"
@@ -27,7 +29,9 @@
         android:text="@string/button_respect"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/swEgo"
-        app:layout_constraintStart_toStartOf="@+id/swEgo" />
+        app:layout_constraintStart_toStartOf="@+id/swEgo"
+        app:thumbTint="@color/switch_thumb_tint"
+        app:trackTint="@color/switch_track_tint" />
 
     <com.google.android.material.materialswitch.MaterialSwitch
         android:id="@+id/swKindness"
@@ -38,7 +42,9 @@
         android:text="@string/button_kindness"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/swEgo"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:thumbTint="@color/switch_thumb_tint"
+        app:trackTint="@color/switch_track_tint" />
 
     <com.google.android.material.materialswitch.MaterialSwitch
         android:id="@+id/swOptimism"
@@ -49,7 +55,9 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/swGiving"
         app:layout_constraintEnd_toEndOf="@+id/swHappiness"
-        app:layout_constraintStart_toStartOf="@+id/swHappiness" />
+        app:layout_constraintStart_toStartOf="@+id/swHappiness"
+        app:thumbTint="@color/switch_thumb_tint"
+        app:trackTint="@color/switch_track_tint" />
 
     <com.google.android.material.materialswitch.MaterialSwitch
         android:id="@+id/swGiving"
@@ -59,7 +67,9 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/swOptimism"
         app:layout_constraintStart_toStartOf="@+id/swOptimism"
-        app:layout_constraintTop_toTopOf="@+id/swRespect" />
+        app:layout_constraintTop_toTopOf="@+id/swRespect"
+        app:thumbTint="@color/switch_thumb_tint"
+        app:trackTint="@color/switch_track_tint" />
 
     <com.google.android.material.materialswitch.MaterialSwitch
         android:id="@+id/swEgo"
@@ -70,7 +80,9 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/swRespect"
         app:layout_constraintEnd_toEndOf="@+id/swKindness"
-        app:layout_constraintStart_toStartOf="@+id/swKindness" />
+        app:layout_constraintStart_toStartOf="@+id/swKindness"
+        app:thumbTint="@color/ego_switch_thumb_tint"
+        app:trackTint="@color/ego_switch_track_tint" />
 
     <ImageView
         android:id="@+id/ivMain"
