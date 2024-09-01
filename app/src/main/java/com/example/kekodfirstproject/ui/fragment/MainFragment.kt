@@ -25,6 +25,7 @@ class MainFragment : Fragment() {
     private lateinit var bottomNav: BottomNavigationView
     private val viewModel: MainViewModel by activityViewModels()
     private val maxItems = 5
+    private val previousSwitchStates = mutableMapOf<Int, Boolean>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -82,7 +83,9 @@ class MainFragment : Fragment() {
             if (bottomNav.menu.size() < maxItems) {
                 addMenuItem(switch.text.toString(), getIconForSwitch(switch), navFragmentId)
             } else {
-                Snackbar.make(binding.root, "Maksimum menü öğesi sınırına ulaşıldı.", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(
+                    binding.root, "Maksimum menü öğesi sınırına ulaşıldı.", Snackbar.LENGTH_SHORT
+                ).show()
                 switch.isChecked = false
             }
         } else {
@@ -92,14 +95,54 @@ class MainFragment : Fragment() {
 
     private fun handleEgoSwitchState(id: Int, isChecked: Boolean) {
         if (id == R.id.swEgo) {
-            setOtherSwitchesEnabled(!isChecked)
-            bottomNav.visibility = if (isChecked) View.GONE else View.VISIBLE
-            binding.ivMain.setImageResource(if (isChecked) R.drawable.ego_image else R.drawable.well_done_image)
+            if (isChecked) {
+                saveSwitchStates()
+                setOtherSwitchesEnabled(false)
+                bottomNav.visibility = View.GONE
+                binding.ivMain.setImageResource(R.drawable.ego_image)
+                // Kapalı switch'lerin durumlarını güncelle ve menü item'larını kaldır
+                removeSwitchesFromMenu()
+            } else {
+                bottomNav.visibility = View.VISIBLE
+                binding.ivMain.setImageResource(R.drawable.well_done_image)
+                restoreSwitchStates()
+                setOtherSwitchesEnabled(true)
+            }
+        }
+    }
+
+    private fun saveSwitchStates() {
+        getSwitches().filter { it.id != R.id.swEgo }.forEach { switch ->
+            previousSwitchStates[switch.id] = switch.isChecked
+            if (switch.isChecked) {
+                switch.isChecked = false
+            }
+        }
+    }
+
+    private fun restoreSwitchStates() {
+        previousSwitchStates.forEach { (id, isChecked) ->
+            getSwitchById(id)?.apply {
+                this.isChecked = isChecked
+                setOnCheckedChangeListener { _, checked ->
+                    handleSwitchChange(this, checked)
+                    viewModel.updateSwitchState(id, checked)
+                }
+            }
+        }
+        previousSwitchStates.clear()
+    }
+
+    private fun removeSwitchesFromMenu() {
+        getSwitches().filter { it.id != R.id.swEgo }.forEach { switch ->
+            val navFragmentId = getNavFragmentId(switch)
+            removeMenuItem(navFragmentId)
         }
     }
 
     private fun navigateToFragment(fragmentId: Int) {
-        val navController = (requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
+        val navController =
+            (requireActivity().supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
         if (navController.currentDestination?.id != fragmentId) {
             navController.navigate(fragmentId)
         }
@@ -117,16 +160,14 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun getSwitches(): List<SwitchCompat> {
-        return listOf(
-            binding.swHappiness,
-            binding.swOptimism,
-            binding.swKindness,
-            binding.swGiving,
-            binding.swRespect,
-            binding.swEgo
-        )
-    }
+    private fun getSwitches(): List<SwitchCompat> = listOf(
+        binding.swHappiness,
+        binding.swOptimism,
+        binding.swKindness,
+        binding.swGiving,
+        binding.swRespect,
+        binding.swEgo
+    )
 
     private fun getNavFragmentId(switch: SwitchCompat): Int {
         return when (switch.id) {
@@ -161,6 +202,6 @@ class MainFragment : Fragment() {
     }
 
     private fun setOtherSwitchesEnabled(isEnabled: Boolean) {
-        getSwitches().filterNot { it.id == R.id.swEgo }.forEach { it.isEnabled = isEnabled }
+        getSwitches().filter { it.id != R.id.swEgo }.forEach { it.isEnabled = isEnabled }
     }
 }
